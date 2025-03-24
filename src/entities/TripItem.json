@@ -1,0 +1,57 @@
+{
+    "name": "TripItem",
+    "type": "object",
+    "properties": {
+        "trip_id": {
+            "type": "string",
+            "description": "המזהה של הטיול אליו שייך הפריט"
+        },
+        "type": {
+            "type": "string",
+            "enum": ["טיסה", "מלון", "רכב", "אטרקציה", "ביטוח", "אחר"],
+            "description": "סוג הפריט"
+        },
+        "title": {
+            "type": "string",
+            "description": "כותרת הפריט"
+        },
+        "description": {
+            "type": "string",
+            "description": "תיאור מפורט"
+        },
+        "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "תאריך התחלה"
+        },
+        "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "תאריך סיום"
+        },
+        "price": {
+            "type": "number",
+            "description": "מחיר הפריט"
+        },
+        "currency": {
+            "type": "string",
+            "default": "₪",
+            "description": "סוג המטבע"
+        },
+        "booking_url": {
+            "type": "string",
+            "description": "קישור להזמנה"
+        },
+        "image_url": {
+            "type": "string",
+            "description": "קישור לתמונה"
+        },
+        "status": {
+            "type": "string",
+            "enum": ["מומלץ", "נבחר", "הוזמן"],
+            "default": "מומלץ",
+            "description": "סטטוס הפריט"
+        }
+    },
+    "required": ["trip_id", "type", "title"]
+}

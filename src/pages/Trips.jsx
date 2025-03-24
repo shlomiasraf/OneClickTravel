@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Trip } from "@/api/entities";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Search } from "lucide-react";
@@ -10,6 +9,7 @@ import { format, isAfter, parseISO } from "date-fns";
 import { he } from "date-fns/locale";
 import TripCard from "../components/trips/TripCard";
 import EmptyState from "../components/trips/EmptyState";
+import { Trip } from "@/api/entities";
 
 export default function Trips() {
   const [trips, setTrips] = useState([]);

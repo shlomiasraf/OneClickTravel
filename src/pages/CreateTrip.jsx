@@ -4,7 +4,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { Trip } from "@/api/entities";
 import { TripItem } from "@/api/entities";
-import { InvokeLLM } from "@/api/integrations";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
@@ -18,6 +17,8 @@ import { he } from "date-fns/locale";
 import { CalendarIcon, Loader2, Search, PlaneTakeoff } from "lucide-react";
 import TripRecommendation from "../components/create-trip/TripRecommendation";
 import { Card, CardContent } from "@/components/ui/card";
+import { InvokeLLM } from "@/api/llm";
+
 
 const formatWeekday = (day) => format(day, "EEEEEE", { locale: he });
 const PREFERENCES = [
@@ -740,6 +741,7 @@ export default function CreateTrip() {
                       initialFocus
                       showOutsideDays={false}
                       formatters={{ formatWeekday }}
+                      className="max-w-[320px] scale-[0.9] sm:scale-100"
                       classNames={{
                         caption: "text-xs flex justify-center items-center h-5 p-0 mb-0 leading-none",
                         head_cell: "h-5 w-8 p-0 flex items-center justify-center rounded-md mt-0 leading-none",
@@ -780,6 +782,7 @@ export default function CreateTrip() {
                       initialFocus
                       showOutsideDays={false}
                       formatters={{ formatWeekday }}
+                      className="max-w-[320px] scale-[0.9] sm:scale-100"
                       classNames={{
                         caption: "text-xs flex justify-center items-center h-5 p-0 mb-0 leading-none",
                         head_cell: "h-5 w-8 p-0 flex items-center justify-center rounded-md mt-0 leading-none",
@@ -865,11 +868,13 @@ export default function CreateTrip() {
               <div className="space-y-4">
                 <Label>תקציב מקסימלי (בש״ח)</Label>
                 <div className="space-y-3">
-                  <Slider
-                    value={[tripData.budget]}
-                    onValueChange={([value]) => setTripData(prev => ({ ...prev, budget: value }))}
-                    max={50000}
-                    min={1000}
+                <Slider
+                    value={[50000 - tripData.budget]} // 💡 הפוך את הערך
+                    onValueChange={([value]) =>
+                      setTripData(prev => ({ ...prev, budget: 50000 - value })) // 💡 הפוך חזרה כשמשנים
+                    }
+                    max={50000 - 1000} // = 49000
+                    min={0}
                     step={1000}
                   />
                   <div className="text-center font-medium">

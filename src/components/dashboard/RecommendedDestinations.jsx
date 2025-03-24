@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // ✅ חדש
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -47,6 +48,8 @@ const DESTINATIONS = [
 ];
 
 export default function RecommendedDestinations({ loading }) {
+  const navigate = useNavigate(); // ✅
+
   if (loading) {
     return (
       <Card className="shadow-sm">
@@ -77,13 +80,14 @@ export default function RecommendedDestinations({ loading }) {
   }
 
   const handleBookPackage = (destination) => {
-    // העברה ישירה לעמוד החבילה עם תאריכים ומחיר מוגדרים
     const params = new URLSearchParams({
       destination: destination.name,
       package: 'true',
       budget: destination.price
     });
-    window.location.href = `${createPageUrl("CreateTrip")}?${params.toString()}`;
+
+    // ✅ שימוש ב-navigate במקום window.location.href
+    navigate(`/CreateTrip?${params.toString()}`);
   };
 
   return (

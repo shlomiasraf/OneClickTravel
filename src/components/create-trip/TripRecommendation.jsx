@@ -11,6 +11,12 @@ export default function TripRecommendation({ recommendation, tripData, onSave, o
   const handleOpenDetails = (type) => {
     setOpenDialog(type);
   };
+  const handlePayment = () => {
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000); // נעלם אחרי 3 שניות (אם רוצים)
+  };
+
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleCloseDialog = () => {
     setOpenDialog(null);
@@ -86,12 +92,17 @@ export default function TripRecommendation({ recommendation, tripData, onSave, o
 
         <Button
           className="w-[50%] bg-gradient text-white hover:opacity-90 text-lg py-7"
-          onClick={onSave}
+          onClick={handlePayment}
           disabled={loading}
         >
           <CreditCard className="ml-3 h-6 w-6" />
           שלם
         </Button>
+        {showSuccess && (
+          <div className="mt-4 text-center text-green-600 font-semibold text-lg">
+          ✅ התשלום עבר בהצלחה!
+      </div>
+)}
       </div>
 
       {openDialog && (

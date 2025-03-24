@@ -1,0 +1,53 @@
+{
+    "name": "Trip",
+    "type": "object",
+    "properties": {
+        "destination": {
+            "type": "string",
+            "description": "יעד הנסיעה"
+        },
+        "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "תאריך תחילת הטיול"
+        },
+        "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "תאריך סיום הטיול"
+        },
+        "budget": {
+            "type": "number",
+            "description": "תקציב כולל לטיול"
+        },
+        "travelers": {
+            "type": "number",
+            "description": "מספר הנוסעים"
+        },
+        "adults": {
+            "type": "number",
+            "description": "מספר מבוגרים",
+            "default": 1
+        },
+        "children": {
+            "type": "number",
+            "description": "מספר ילדים",
+            "default": 0
+        },
+        "preferences": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": ["חופש", "טבע", "עיר", "אוכל", "תרבות", "אקסטרים", "רוגע", "קניות"]
+            },
+            "description": "העדפות לטיול"
+        },
+        "status": {
+            "type": "string",
+            "enum": ["מתוכנן", "הוזמן", "בתהליך", "הושלם"],
+            "default": "מתוכנן",
+            "description": "סטטוס הטיול"
+        }
+    },
+    "required": ["destination", "start_date", "end_date", "travelers"]
+}

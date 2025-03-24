@@ -1,0 +1,31 @@
+{
+    "name": "UserProfile",
+    "type": "object",
+    "properties": {
+        "user_id": {
+            "type": "string",
+            "description": "המזהה של המשתמש"
+        },
+        "first_name_en": {
+            "type": "string",
+            "description": "שם פרטי באנגלית"
+        },
+        "last_name_en": {
+            "type": "string",
+            "description": "שם משפחה באנגלית"
+        },
+        "phone": {
+            "type": "string",
+            "description": "מספר טלפון"
+        },
+        "passport_number": {
+            "type": "string",
+            "description": "מספר דרכון"
+        },
+        "id_number": {
+            "type": "string",
+            "description": "מספר תעודת זהות"
+        }
+    },
+    "required": ["user_id"]
+}

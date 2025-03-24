@@ -3,11 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Base44 APP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>OneClickTravel</title>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- 🔒 חוסם את gapi לפני שהאפליקציה נטענת -->
+    <script>
+      const isCapacitor = typeof window.Capacitor !== "undefined" && window.Capacitor.isNativePlatform?.();
+      if (isCapacitor) {
+        console.log("🔒 הפעלת חסימת gapi!");
+        window.gapi = {
+          load: () => {},
+          iframes: { getContext: () => null }
+        };
+      }
+
+      console.log("📦 index.html loaded!");
+      console.log("📱 window.Capacitor:", window.Capacitor);
+      console.log("🧠 Capacitor זמין?", typeof window.Capacitor !== "undefined");
+      if (isCapacitor) {
+        console.log("✅ האפליקציה רצה על נייטיב");
+      } else {
+        console.log("🌐 רץ על Web רגיל");
+      }
+    </script>
+
+    <!-- 🚀 אפליקציית React שלך -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,24 +1,26 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    allowedHosts: true
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-    extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json']
   },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-      },
-    },
+  define: {
+    'process.env.NODE_ENV': '"production"', // חשוב למנוע טעינת רכיבים מיותרים ב־firebase
   },
-}) 
+  build: {
+    rollupOptions: {
+      // מונע טעינה של gapi/platform.js כשנבנה לקומפילציה של אפליקציה נייטיבית
+      external: [
+        'gapi',
+        'gapi.auth2',
+        'gapi.client',
+        'platform.js'
+      ]
+    }
+  }
+});
