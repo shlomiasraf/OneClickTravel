@@ -512,46 +512,13 @@ export default function CreateTrip() {
       אנא הצע חבילת נופש מפורטת הכוללת טיסות, מלון, אטרקציות ופעילויות מומלצות.`;
 
       const result = await InvokeLLM({
-        prompt,
-        response_json_schema: {
-          type: "object",
-          properties: {
-            flight: {
-              type: "object",
-              properties: {
-                title: { type: "string" },
-                description: { type: "string" },
-                price: { type: "number" },
-                url: { type: "string" }
-              }
-            },
-            hotel: {
-              type: "object",
-              properties: {
-                title: { type: "string" },
-                description: { type: "string" },
-                price: { type: "number" },
-                url: { type: "string" }
-              }
-            },
-            activities: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  title: { type: "string" },
-                  description: { type: "string" },
-                  price: { type: "number" },
-                  url: { type: "string" }
-                }
-              }
-            },
-            total_price: { type: "number" },
-            tips: { type: "array", items: { type: "string" } }
-          }
-        }
+        destination: tripData.destination,
+        startDate: format(tripData.start_date, "yyyy-MM-dd"),
+        endDate: format(tripData.end_date, "yyyy-MM-dd"),
+        numPeople: tripData.adults + tripData.children,
+        budget: tripData.budget,
+        style: tripData.preferences.includes("יוקרתי") ? "fancy" : "cheap"
       });
-
       setRecommendation(result);
       setCurrentStep(2);
     } catch (error) {
