@@ -1,4 +1,4 @@
-const LOCAL_NETWORK_IP = "http://10.0.0.26:3001";
+const LOCAL_NETWORK_IP = "http://172.20.10.2:3001";
 
 const getBackendUrl = () => {
   if (window.Capacitor?.isNativePlatform) {

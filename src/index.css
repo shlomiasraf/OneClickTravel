@@ -78,4 +78,8 @@
   .rtl-slider {
     direction: rtl;
   }
+  [data-state="open"] button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 }

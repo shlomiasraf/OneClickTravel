@@ -51,14 +51,16 @@ export default function TripRecommendation({ recommendation, tripData, onSave, o
             onInfoClick={() => handleOpenDetails("flight")}
           />
 
-          <TripItemRow
-            icon={Building2}
-            title={recommendation.hotel.title}
-            price={recommendation.hotel.price}
-            onInfoClick={() => handleOpenDetails("hotel")}
-          />
+          {recommendation.hotel && (
+            <TripItemRow
+              icon={Building2}
+              title={recommendation.hotel.title}
+              price={recommendation.hotel.price}
+              onInfoClick={() => handleOpenDetails("hotel")}
+            />
+          )}
 
-          {recommendation.activities.map((activity, index) => (
+          {recommendation.activities && recommendation.activities.map((activity, index) => (
             <TripItemRow
               key={index}
               icon={Ticket}
@@ -72,7 +74,7 @@ export default function TripRecommendation({ recommendation, tripData, onSave, o
             <div className="grid grid-cols-2 gap-32 items-center">
               <div className="font-bold text-2xl text-white">סה"כ לתשלום</div>
               <div className="font-bold text-2xl text-white whitespace-nowrap">
-                {new Intl.NumberFormat('he-IL').format(recommendation.total_price)} ₪
+                 {new Intl.NumberFormat('he-IL').format(recommendation.totalPrice)} ₪
               </div>
             </div>
           </div>
@@ -131,56 +133,45 @@ export default function TripRecommendation({ recommendation, tripData, onSave, o
               </DialogTitle>
             </DialogHeader>
 
-            <div className="mt-4">
-              {openDialog === "flight" && (
-                <div>
-                  <p className="text-gray-600">{recommendation.flight.description}</p>
+            <div className="mt-4" dir="rtl">
+            {openDialog === "flight" && (
+              <div className="space-y-4 text-right" dir="rtl">
+                {recommendation.flight.segments.map((seg, index) => {
+                  const dep = new Date(seg.time.split("→")[0].trim());
+                  const arr = new Date(seg.time.split("→")[1].trim());
+
+                  return (
+                    <div key={index} className="bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-200">
+                      <p className="text-gray-800">
+                        <span className="font-bold">טיסה: </span>
+                        מ-{seg.from} ל-{seg.to}
+                      </p>
+                      <p className="text-gray-800">
+                        <span className="font-bold">יציאה: </span>
+                        {dep.toLocaleString("he-IL")}
+                      </p>
+                      <p className="text-gray-800">
+                        <span className="font-bold">הגעה: </span>
+                        {arr.toLocaleString("he-IL")}
+                      </p>
+                    </div>
+                  );
+                })}
+
+                <div className="flex justify-center mt-4">
                   <a 
                     href={recommendation.flight.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-cyan-600 hover:underline mt-4"
+                    className="flex items-center gap-2 text-cyan-600 hover:underline"
                   >
                     <ExternalLink className="h-4 w-4" />
                     צפייה בפרטי הטיסה
                   </a>
                 </div>
-              )}
-              {openDialog === "hotel" && (
-                <div>
-                  <p className="text-gray-600">{recommendation.hotel.description}</p>
-                  <a 
-                    href={recommendation.hotel.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-cyan-600 hover:underline mt-4"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    צפייה בפרטי המלון
-                  </a>
-                </div>
-              )}
-              {openDialog.startsWith("activity-") && (
-                <div>
-                  <p className="text-gray-600">
-                    {recommendation.activities[parseInt(openDialog.split("-")[1])].description}
-                  </p>
-                  <a 
-                    href={recommendation.activities[parseInt(openDialog.split("-")[1])].url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-cyan-600 hover:underline mt-4"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    צפייה בפרטי האטרקציה
-                  </a>
-                </div>
-              )}
-            </div>
-
-            <DialogFooter>
-              <Button onClick={handleCloseDialog}>סגירה</Button>
-            </DialogFooter>
+              </div> // ✅ סגירת ה-div הפנימית
+            )}
+          </div>
           </DialogContent>
         </Dialog>
       )}

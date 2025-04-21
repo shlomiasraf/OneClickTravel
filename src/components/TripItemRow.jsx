@@ -17,7 +17,9 @@ const TripItemRow = ({ icon: Icon, title, price, onInfoClick, isHeader }) => {
       {/* עמודת שם הפריט - בצד ימין */}
       <div className="flex items-center gap-5">
         {Icon && <div className="p-2 rounded-full bg-cyan-100 text-cyan-700"><Icon className="w-5 h-5" /></div>}
-        <div className="font-medium text-lg text-gray-700">{title}</div>
+        <div className="font-medium text-lg text-gray-700 whitespace-nowrap">
+          {(title || "").replace(/\s+/g, " ").trim()}
+        </div>
       </div>
 
       {/* עמודת המחיר - בצד שמאל */}
